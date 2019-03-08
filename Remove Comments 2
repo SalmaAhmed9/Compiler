@@ -1,0 +1,53 @@
+package model;
+import java.util.Arrays;
+
+public class Removecomments1 {
+	public static String RemoveComments (String program [])	
+	{
+		int n =program.length;
+		String result=null;
+		boolean s_comment=false;
+		boolean d_comment=false;
+		for(int i=0;i<n;i++) {
+			 if (s_comment == true && program [i] == "\n" )
+		            s_comment = false; 
+			 else if  (d_comment == true && program[i] == "*" && program[i+1] == "/") 
+			 {
+		         
+		            i++; }
+			 else if (s_comment || d_comment) 
+		            continue; 
+		            else if (program[i] == "/" && program[i+1] == "/") 
+		            {
+		                s_comment = true;
+		                i++; }
+		            else if (program[i] == "/" && program[i+1] == "*") {
+		                d_comment = true;
+			 i++; }
+			 else result+=program[i];
+		}
+		return result;
+		}
+
+
+
+	public static void main(String[] args) {
+		String[] program = {"   /* testing code */ \n"+
+				"  public static void main(String[] args) { \n"+
+                "   {           \n"+
+                "      // variable declaration \n" +
+                "      int a1, a2, res ;    \n" +
+                "     res = a1 + a2 ;      \n" +
+                "   }           \n"} ; 
+			
+				
+				
+				
+		System.out.println("this is the program :\n  " + Arrays.toString(program));
+		RemoveComments(program);
+				
+				System.out.println("this is the modified program :  \n" +Arrays.toString(program) );
+		
+	}
+
+}
