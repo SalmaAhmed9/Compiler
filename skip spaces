@@ -1,0 +1,61 @@
+
+import java.io.*;
+import java.util.Scanner;
+public class  Parser {
+	public final static Scanner input=new Scanner(System.in);
+	static char token;
+	public static int line=1;
+
+	public static char GotToken()
+	{
+		return token =Nextchar(input);
+		
+	}
+	private static char Nextchar(Scanner scanner) {
+		
+		input.useDelimiter("");
+		char t=scanner.next().charAt(0);
+		
+scanner.reset();
+return t;
+	}
+	public static void S()
+	{
+		switch(token) {
+		case 'a':
+			GotToken();
+			break;
+		case '-':
+		case '+':
+			GotToken();
+			S();
+			S();
+			break;
+			default:System.err.println("syntax error");
+		}
+	}
+	public static void scan()  throws IOException
+	{
+		for(;;token=(char)System.in.read())
+		{
+	if(token==' '||token=='\t')
+	{
+		continue;
+	}
+	else if (token=='\n') 
+		line=line+1;
+	
+		else break;
+		}
+	}
+	public static void main(String[] args) throws IOException {
+	while(true)
+	{
+		System.out.println("enter code");
+		System.out.flush();
+		GotToken();
+		scan();
+		S();
+	}}
+	
+}
