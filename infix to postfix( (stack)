@@ -1,0 +1,52 @@
+package java.util;
+
+import java.util.Stack;
+public class InfixToPostfix {
+static int lookahead(char ch)
+{ switch(ch)
+	{
+      case '+':
+	  case '-' :
+		return 1;
+	case '*':
+	case '/':
+		return 2;
+		
+	}
+	return -1; 
+}
+static String Scanner(String exp)
+{
+	String res = new String (" ");
+	Stack<Character> stack= new Stack<>();
+	for ( int i=0;i<exp.length();i++)
+	{
+		char Scan=exp.charAt(i);
+		if(Character.isDigit(Scan))
+			res+=Scan;
+		else if (Scan=='(')
+			stack.push(Scan);
+		else if(Scan==')') {
+			while(!stack.isEmpty() && stack.peek()!='(')
+				res+=stack.pop();
+			if (!stack.isEmpty() && stack.peek()!='(')
+				return"invalid exp";
+			else stack.pop();
+		}
+		else {
+			while(!stack.isEmpty() && lookahead(Scan)<=lookahead(stack.peek()))
+				res+=stack.pop();
+			stack.push(Scan);
+			
+	}
+		while(!stack.isEmpty())
+			res+=stack.pop();
+	
+}
+	return res;
+}
+public static void main(String [] args) {
+	String exp="3+2*1";
+	System.out.println(Scanner(exp));
+}
+}
