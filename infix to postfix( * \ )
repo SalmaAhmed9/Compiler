@@ -1,0 +1,90 @@
+package postfix;
+import java.io.*;
+public class Postfix {
+	static int Lookahead;
+	public Postfix () throws IOException
+	{
+		Lookahead=System.in.read();
+	
+	}
+
+	void Expr () throws IOException
+	{
+		term();
+		
+		while(true) {
+			
+					 if(Lookahead=='*')
+			{
+				match('*');
+			
+				System.out.write('(');
+								factor();
+								System.out.write(')');	
+				System.out.write('*');
+			}
+			
+			else if(Lookahead=='/')
+			{
+				match('/');
+				System.out.write('(');
+				factor();
+				System.out.write(')');
+				System.out.write('/');}
+		if(Lookahead=='+')
+		{
+			match('+');	
+			term();
+			System.out.write('+');
+		}
+		
+		else if(Lookahead=='-')
+		{
+			match('-');
+			term();
+			System.out.write('-');
+		}
+	
+		else
+			return;
+	}
+	}
+	
+	void factor() throws IOException{
+		if(Character.isDigit((char)Lookahead))
+		{
+			System.out.write((char)Lookahead);
+			match(Lookahead);
+		}
+		else
+			throw new Error("syntax error");
+	}
+	
+
+void term() throws IOException
+{
+	if(Character.isDigit((char)Lookahead))
+	{
+		System.out.write((char)Lookahead);
+		match(Lookahead);
+	}
+	else
+		throw new Error("syntax error");
+}
+void match(int i)throws IOException
+{ 
+	if(Lookahead==i)
+		Lookahead=System.in.read();
+	else
+		throw new Error("sytnax error");
+	}
+
+
+public static void main(String [] args) throws IOException
+{
+	Postfix obj=new Postfix ();
+	obj.Expr();
+	System.out.write('\n');
+
+	}
+}
